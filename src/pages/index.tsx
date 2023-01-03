@@ -1,12 +1,14 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
+import { styled } from "../styles";
 
+const Button = styled("button", {
+  backgroundColor: "$green500",
+  border: "1px solid #000",
+  borderRadius: "4px",
 
-const inter = Inter({ subsets: ['latin'] })
+  });
 
 export default function Home() {
   return (
-        <h1> Hello World</h1>
+    <Button>Enviar</Button>
   )
-}
+};

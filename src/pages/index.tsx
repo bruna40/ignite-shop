@@ -1,4 +1,5 @@
 import { HomeContainer, Product } from "../styles/pages/home";
+import Head from "next/head";
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -13,10 +14,10 @@ import Stripe from "stripe";
 
 interface HomeProps {
   products: {
-    id: string;
-    title: string;
-    price: number;
-    image: string;
+    id: string
+    title: string
+    price: string
+    image: string
   }[];
 }
 
@@ -30,10 +31,14 @@ export default function Home({ products }: HomeProps) {
   });
 
   return (
+    <>
+    <Head>
+      <title> Ignite Shop</title>
+    </Head>
     <HomeContainer ref={sliderRef} className='keen-slider'>
       {products.map(product => {
         return (
-          <Link key={product.id} href={`/product/${product.id}`}>
+          <Link key={product.id} href={`/product/${product.id}`} prefetch={false}>
             <Product className='keen-slider__slide'>
               <Image src={product.image} width={520} height={400} alt="" />
               <footer>
@@ -45,6 +50,8 @@ export default function Home({ products }: HomeProps) {
         )
       })}
     </HomeContainer>
+    </>
+
   )
 };
 
@@ -61,10 +68,10 @@ export const getStaticProps: GetStaticProps = async () => {
       price: new Intl.NumberFormat('pt-BR', {
         style: 'currency',
         currency: 'BRL'
-      }).format(price.unit_amount! / 100),
+      }).format(price.unit_amount / 100),
       image: product.images[0],
-  }
-});
+    }
+  });
 
   return {
     props: {
